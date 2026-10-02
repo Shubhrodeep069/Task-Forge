@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Task Forge{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+        <div>
+            <h1>Welcome back, {{ user.username }} 👋</h1>
+
+            <p>
+                Here's what's happening with your projects.
+            </p>
+        </div>
+
+        <a href="{% url 'create_project' %}" class="dashboard-btn">
+            + New Project
+        </a>
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <h3>Projects</h3>
+            <p>{{ project_count }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Tasks</h3>
+            <p>{{ task_count }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Completed</h3>
+            <p>{{ completed_count }}</p>
+        </div>
+
+    </div>
+
+
+    <section class="projects-section">
+
+        <div class="section-header">
+            <h2>My Projects</h2>
+
+            <a href="#">
+                View All
+            </a>
+        </div>
+
+        {% if projects %}
+
+        <div class="project-grid">
+
+            {% for project in projects %}
+
+            <a href="{% url 'project_detail' project.id %}" class="project-card">
+                <h3>{{ project.name }}</h3>
+
+                <p>
+                    {{ project.description|default:"No description provided." }}
+                </p>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-projects">
+
+            <div class="empty-icon">
+                📋
+            </div>
+
+            <h3>No projects yet</h3>
+
+            <p>
+                Create your first project and start organizing your work.
+            </p>
+
+            <a href="{% url 'create_project' %}" class="dashboard-btn">
+                + Create Your First Project
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+{% endblock %}

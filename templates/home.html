@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Task Forge{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Task Forge ⚡</h1>
+
+        <p>
+            Manage projects, organize tasks, collaborate with your team,
+            and get work done efficiently.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{% url 'login' %}" class="btn primary-btn">Get Started</a>
+            <a href="{% url 'dashboard' %}" class="btn secondary-btn">
+    Explore Projects
+</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

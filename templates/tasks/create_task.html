@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Task - Task Forge{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h1>Create Task 📝</h1>
+
+        <p class="auth-subtitle">
+            Add a new task to
+            <strong>{{ project.name }}</strong>
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="auth-btn">
+                Create Task
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+
+            <a href="{% url 'project_detail' project.id %}">
+                ← Back to Project
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

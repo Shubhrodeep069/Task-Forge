@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit {{ project.name }} - Task Forge{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <div class="form-header">
+
+        <a href="{% url 'project_detail' project.id %}" class="back-link">
+            ← Back to Project
+        </a>
+
+        <h1>Edit Project</h1>
+
+        <p>Update the details of your project.</p>
+
+    </div>
+
+    <form method="POST" class="project-form">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="form-actions">
+
+            <a href="{% url 'project_detail' project.id %}" class="cancel-btn">
+                Cancel
+            </a>
+
+            <button type="submit" class="dashboard-btn">
+                Save Changes
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

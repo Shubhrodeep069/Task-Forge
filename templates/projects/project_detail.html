@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.name }} - Task Forge{% endblock %}
+
+{% block content %}
+
+<div class="project-detail-container">
+
+    <div class="project-detail-header">
+
+        <div>
+            <a href="{% url 'dashboard' %}" class="back-link">
+                ← Back to Dashboard
+            </a>
+
+            <h1>{{ project.name }}</h1>
+
+            <p>
+                {{ project.description|default:"No description provided." }}
+            </p>
+        </div>
+
+        <div class="project-header-actions">
+
+    <a href="{% url 'create_task' project.id %}" class="dashboard-btn">
+        + Add Task
+    </a>
+
+    {% if project.owner == user %}
+
+         <a href="{% url 'edit_project' project.id %}" class="edit-project-btn">
+        Edit Project
+    </a>
+    
+        <form method="POST"
+              action="{% url 'delete_project' project.id %}"
+              onsubmit="return confirm('Are you sure you want to delete this project and all its tasks?');">
+
+            {% csrf_token %}
+
+            <button type="submit" class="delete-project-btn">
+                Delete Project
+            </button>
+
+        </form>
+    {% endif %}
+
+</div>
+
+    </div>
+
+
+    <div class="project-info-grid">
+
+        <div class="project-info-card">
+            <span>Owner</span>
+            <strong>{{ project.owner.username }}</strong>
+        </div>
+
+        <div class="project-info-card">
+            <span>Members</span>
+            <strong>{{ project.members.count }}</strong>
+        </div>
+
+        <div class="project-info-card">
+            <span>Tasks</span>
+            <strong>{{ tasks.count }}</strong>
+        </div>
+
+        <div class="project-info-card">
+            <span>Status</span>
+            <strong>Active</strong>
+        </div>
+
+    </div>
+
+    <div class="member-section">
+
+    <div class="section-header">
+        <h2>Project Members</h2>
+    </div>
+
+    <form method="POST" class="member-form">
+    {% csrf_token %}
+
+    {{ member_form.username }}
+
+    {% if member_form.username.errors %}
+        <div class="form-error">
+            {{ member_form.username.errors }}
+        </div>
+    {% endif %}
+
+    <button type="submit" class="dashboard-btn">
+        + Add Member
+    </button>
+</form>
+
+    <div class="member-list">
+
+        {% for member in project.members.all %}
+    <div class="member-item">
+
+        <div>
+            <strong>{{ member.username }}</strong>
+
+            {% if member == project.owner %}
+                <small>Project Owner</small>
+            {% else %}
+                <small>Member</small>
+            {% endif %}
+        </div>
+
+        {% if project.owner == user and member != project.owner %}
+            <form method="POST"
+                  action="{% url 'remove_member' project.id member.id %}"
+                  onsubmit="return confirm('Remove {{ member.username }} from this project?');">
+
+                {% csrf_token %}
+
+                <button type="submit" class="remove-member-btn">
+                    Remove
+                </button>
+
+            </form>
+        {% endif %}
+
+    </div>
+{% endfor %}
+
+    </div>
+
+</div>
+
+
+    <section class="project-board-section">
+
+        <div class="section-header">
+            <h2>Project Tasks</h2>
+        </div>
+
+        {% if tasks %}
+
+        <div class="task-board">
+
+            {% for task in tasks %}
+
+            <a href="{% url 'task_detail' project.id task.id %}" class="task-item">
+
+                <div class="task-top">
+
+                    <span class="task-label">
+                        TASK
+                    </span>
+
+                    <span class="task-status {{ task.status }}">
+                        {{ task.get_status_display }}
+                    </span>
+
+                </div>
+
+                <h3 class="task-title">
+                    {{ task.title }}
+                </h3>
+
+                <p class="task-description">
+                    {{ task.description|default:"No description provided." }}
+                </p>
+
+                <div class="task-details">
+
+                    <div>
+                        <small>PRIORITY</small>
+                        <strong>{{ task.get_priority_display }}</strong>
+                    </div>
+
+                    <div>
+                        <small>ASSIGNED TO</small>
+
+                        <strong>
+                            {% if task.assigned_to %}
+                            {{ task.assigned_to.username }}
+                            {% else %}
+                            Unassigned
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-project-tasks">
+
+            <div class="empty-icon">📋</div>
+
+            <h3>No tasks yet</h3>
+
+            <p>
+                Start by creating a task for this project.
+            </p>
+
+            <a href="{% url 'create_task' project.id %}" class="dashboard-btn">
+                + Create Task
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+{% endblock %}
