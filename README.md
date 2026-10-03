@@ -147,23 +147,19 @@ Dark mode
 REST API integration
 Screenshots
 
-Screenshots of the application can be added here.
+## Screenshots
 
-Home Page
+### Home Page
+![Home Page](screenshots/home.png)
 
-Add screenshot here
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
 
-Dashboard
+### Project Details
+![Project Details](screenshots/project-detail.png)
 
-Add screenshot here
-
-Project Details
-
-Add screenshot here
-
-Task Details
-
-Add screenshot here
+### Task Details
+![Task Details](screenshots/task-detail.png)
 
 Learning Outcomes
 
