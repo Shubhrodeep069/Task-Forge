@@ -24,3 +24,8 @@ media/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Sensitive files
+password.txt
+*.key
+*.pem
