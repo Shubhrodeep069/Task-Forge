@@ -188,8 +188,3 @@ Shubhrodeep Majumder
 
 B.Tech Computer Science and Engineering
 RCC Institute of Information Technology
-
-
-**Important:** এখন `<your-repository-url>` আর screenshot placeholders 그대로 রাখো। এগুলো আমরা পরে actual GitHub URL এবং screenshots দিয়ে replace করব।
-
-Paste করার পর আমাকে `done` বলো।
